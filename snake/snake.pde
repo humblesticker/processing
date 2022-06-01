@@ -33,14 +33,20 @@ class Snake {
   }
   
   void update() {
-    if(horizontal(this.direction)) {
-      if(this.xspeed == 0 && this.y % this.Size == 0) { this.xspeed = speed(this.direction); this.yspeed = 0; } //<>//
-    } else {
-      if(this.yspeed == 0 && this.x % this.Size == 0) { this.yspeed = speed(this.direction); this.xspeed = 0; }
-    } //<>//
+    if(this.x % this.Size == 0 && this.y % this.Size == 0) updateSpeed(this.direction); //<>// //<>//
     
     this.x += this.xspeed;
     this.y += this.yspeed;
+  }
+  
+  void updateSpeed(char direction) {
+    this.xspeed = 0;
+    this.yspeed = 0;
+    
+    if(direction == 'a') this.xspeed = -1;
+    else if(direction == 'd') this.xspeed = 1;
+    else if(direction == 'w') this.yspeed = -1;
+    else if(direction == 's') this.yspeed = 1;
   }
   
   void show() {
@@ -49,15 +55,6 @@ class Snake {
   }
   
   void move(char direction) {
-    if(allowed(this.direction, direction)) this.direction = direction; //<>//
-    println("this.direction: " + this.direction);
+    this.direction = direction; //<>//
   }
-  
-  boolean allowed(char current, char next) { 
-    return horizontal(current) ^ horizontal(next);
-  }
-  
-  boolean horizontal(char direction) { return direction == 'a' || direction == 'd'; }
-  boolean vertical(char direction) { return direction == 'w' || direction == 's'; }
-  int speed(char direction) { return direction == 'a' || direction == 'w' ? -1 : 1; }
 }
